@@ -4,11 +4,11 @@
 	<title>AMCC System</title>
 </head>
 <body>
-<form action="leitor.php" method="post" enctype="multipart/form-data">
+<form action="leitor.php" method="post">
 <label>Arquivo:</label>
-<input type="file" name="arquivo" />
+<input type="file" multiple name="arquivo[]" />
 
-<input type="submit" name="Enviar" /                              >
+<input type="submit" name="Enviar" />
 </form>
 </body>
 </html>

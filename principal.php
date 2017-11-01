@@ -16,5 +16,6 @@ $fet_buscar = mysql_fetch_assoc($executar);
 
 <body>
 Olá <?php echo $fet_buscar['login'];?>
+<br /><a href="leitor.php">csv</a>
 </body>
 </html>
