@@ -11,14 +11,36 @@
     <script type='text/javascript'>//<![CDATA[
         $(window).load(function(){
         $('#click').click(function(){
+        	$csv = Array();
             var files = $('input#files')[0].files;
             var names = "";
             $.each(files,function(i, file){
                names += file.name + "<br/>";
             });
-            document.getElementById("result").innerHTML = names;
+            $file = fopen(names, 'r');
+
+			while (($line = fgetcsv($file)) !== false)
+			{
+  				$csv[] = $line;
+			}
+
+			fclose($file);
+
+			for($i = 0; $i < count(csv); $i++){
+				echo $csv[$i];
+			}
+            //document.getElementById("result").innerHTML = $csv;
         });
         });//]]> 
+
+
+$file = fopen('numeros.csv', 'r');
+while (($line = fgetcsv($file)) !== false)
+{
+  $meuArray[] = $line;
+}
+fclose($file);
+print_r($meuArray);
 
     </script>
   
@@ -27,7 +49,7 @@
 <body>
   <form action='server.php' method='post' enctype='multipart/form-data' >
                 <input id="files" name='files[]' type='file' multiple>
-                <input type='button' value="Click para mostrar Arquivos" id="click">
+                <input type='button' value="Carregar dados" id="click">
                 <div id="result" />
     </form>
 
