@@ -9,50 +9,44 @@
 
 
     <script type='text/javascript'>//<![CDATA[
-        $(window).load(function(){
-        $('#click').click(function(){
-        	$csv = Array();
-            var files = $('input#files')[0].files;
-            var names = "";
-            $.each(files,function(i, file){
-               names += file.name + "<br/>";
-            });
-            $file = fopen(names, 'r');
+		var leitorDeCSV = new FileReader();
 
-			while (($line = fgetcsv($file)) !== false)
-			{
-  				$csv[] = $line;
-			}
+		window.onload = function init() {
+		  leitorDeCSV.onload = leCSV;
+		}
 
-			fclose($file);
+		function pegaCSV(inputFile) {
+		  var file = inputFile.files[0];
+		  leitorDeCSV.readAsText(file);
+		}
 
-			for($i = 0; $i < count(csv); $i++){
-				echo $csv[$i];
-			}
-            //document.getElementById("result").innerHTML = $csv;
-        });
-        });//]]> 
+		function leCSV(evt) {
 
+		  var fileArr = evt.target.result.split('\n');
+		  var strDiv = '<table>';
 
-$file = fopen('numeros.csv', 'r');
-while (($line = fgetcsv($file)) !== false)
-{
-  $meuArray[] = $line;
-}
-fclose($file);
-print_r($meuArray);
+		  for (var i = 0; i < fileArr.length; i++) {
+		    strDiv += '<tr>';
+		    var fileLine = fileArr[i].split(',');
+		    for (var j = 0; j < fileLine.length; j++) {
+		      strDiv += '<td>' + fileLine[j].trim() + '</td>';
+		    }
+		    strDiv += '</tr>';
+		  }
+
+		  strDiv += '</table>';
+
+		  var CSVsaida = document.getElementById('CSVsaida');
+		  CSVsaida.innerHTML = strDiv;
+		}
 
     </script>
   
 </head>
 
 <body>
-  <form action='server.php' method='post' enctype='multipart/form-data' >
-                <input id="files" name='files[]' type='file' multiple>
-                <input type='button' value="Carregar dados" id="click">
-                <div id="result" />
-    </form>
-
+<input type="file" id="inputCSV" onchange="pegaCSV(this)">
+<div id="CSVsaida"></div>
   
 </body>
 
