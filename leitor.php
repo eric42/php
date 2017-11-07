@@ -23,13 +23,15 @@
 		function leCSV(evt) {
 
 		  var fileArr = evt.target.result.split('\n');
-		  var strDiv = '<table>';
+		  var strDiv = '<table border = 1>';
 
 		  for (var i = 0; i < fileArr.length; i++) {
 		    strDiv += '<tr>';
-		    var fileLine = fileArr[i].split(',');
+		    var fileLine = fileArr[i].split(';');
 		    for (var j = 0; j < fileLine.length; j++) {
-		      strDiv += '<td>' + fileLine[j].trim() + '</td>';
+		      if(fileLine[j].length > 0){
+		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
+		      }
 		    }
 		    strDiv += '</tr>';
 		  }
