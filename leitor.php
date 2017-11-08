@@ -24,12 +24,30 @@
 
 		  var fileArr = evt.target.result.split('\n');
 		  var strDiv = '<table border = 1>';
+/*
+		  for(var a = 0; a < fileArr.length; a++){
+
+		  	var campo = fileArr[0].split(';');
+
+		  	for(var b = 0; b < fileLine.length; b++)
+		  	{
+		  		strDiv += '<input type="text" >';
+		  	}
+		  }*/
 
 		  for (var i = 0; i < fileArr.length; i++) {
 		    strDiv += '<tr>';
-		    var fileLine = fileArr[i].split(';');
+
+
+	    	var fileLine = fileArr[i].split(';');
+
 		    for (var j = 0; j < fileLine.length; j++) {
+
 		      if(fileLine[j].length > 0){
+		      	if (i == 0)
+		      	{
+		      		strDiv += '<input type="text" >';
+		      	}
 		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
 		      }
 		    }
