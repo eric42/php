@@ -24,16 +24,7 @@
 
 		  var fileArr = evt.target.result.split('\n');
 		  var strDiv = '<table border = 1>';
-/*
-		  for(var a = 0; a < fileArr.length; a++){
 
-		  	var campo = fileArr[0].split(';');
-
-		  	for(var b = 0; b < fileLine.length; b++)
-		  	{
-		  		strDiv += '<input type="text" >';
-		  	}
-		  }*/
 
 		  for (var i = 0; i < fileArr.length; i++) {
 		    strDiv += '<tr>';
@@ -46,7 +37,7 @@
 		      if(fileLine[j].length > 0){
 		      	if (i == 0)
 		      	{
-		      		strDiv += '<input type="text" >';
+		      		strDiv += '<br> <input type="text" > <br>';
 		      	}
 		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
 		      }
@@ -60,14 +51,29 @@
 		  CSVsaida.innerHTML = strDiv;
 		}
 
+		var cbs = document.getElementsByClassName('cb');
+
+
+
+		function cbClick() {
+    		var input = document.querySelector('input[data-id="' + this.getAttribute('data-id') + '"]:not([type="checkbox"])');
+    		input.disabled = !this.checked;
+		}
+
+		for(var i in cbs) {
+    		cbs[i].onclick = cbClick;
+		}
+
     </script>
   
 </head>
 
 <body>
-<input type="file" id="inputCSV" onchange="pegaCSV(this)">
-<div id="CSVsaida"></div>
-  
-</body>
 
+<input type="checkbox" name="chkNovo" checked="true" value="Novo" onchange="cbClick">Nova tabela?<br>
+
+<input type="file" id="inputCSV" onchange="pegaCSV(this)" data-id="inputCSV" disabled>
+<div id="CSVsaida"></div>
+
+</body>
 </html>
