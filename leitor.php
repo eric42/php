@@ -37,7 +37,7 @@
 		      if(fileLine[j].length > 0){
 		      	if (i == 0)
 		      	{
-		      		strDiv += '<br> <input type="text" > <br>';
+		      		strDiv += '<br> <input type="text" data-id="campo" disabled> <br>';
 		      	}
 		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
 		      }
@@ -51,29 +51,40 @@
 		  CSVsaida.innerHTML = strDiv;
 		}
 
-		var cbs = document.getElementsByClassName('cb');
 
-
-
-		function cbClick() {
-    		var input = document.querySelector('input[data-id="' + this.getAttribute('data-id') + '"]:not([type="checkbox"])');
-    		input.disabled = !this.checked;
-		}
-
-		for(var i in cbs) {
-    		cbs[i].onclick = cbClick;
-		}
-
+    </script>
+    <script>
+    	$(function(){
+        $(".btn-toggle").click(function(e){
+            e.preventDefault();
+            el = $(this).data('element');
+            $(el).toggle();
+        });
+    });
     </script>
   
 </head>
 
 <body>
 
-<input type="checkbox" name="chkNovo" checked="true" value="Novo" onchange="cbClick">Nova tabela?<br>
+<?php
 
-<input type="file" id="inputCSV" onchange="pegaCSV(this)" data-id="inputCSV" disabled>
+?>
+
+<input type="button" name="btnNovo" value="Nova Tabela">
+
+<input type="button" name="btnNovo" value="Atualizar Tabela">
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div id="minhaDiv">
+<input type="file" id="inputCSV" onchange="pegaCSV(this)" >
+</div>
+<button type="button" class="btn-toggle" data-element="#minhaDiv">Mostrar / Esconder</button>
+
 <div id="CSVsaida"></div>
+
 
 </body>
 </html>
