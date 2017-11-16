@@ -25,23 +25,27 @@
 		  var fileArr = evt.target.result.split('\n');
 		  var strDiv = '<table border = 1>';
 
-
 		  for (var i = 0; i < fileArr.length; i++) {
+
 		    strDiv += '<tr>';
 
+	    	var fileLine = fileArr[i].split(';');
+
+		  for (var i = 0; i < fileArr.length; i++) {
+
+		    strDiv += '<tr>';
 
 	    	var fileLine = fileArr[i].split(';');
 
 		    for (var j = 0; j < fileLine.length; j++) {
-
-		      if(fileLine[j].length > 0){
+		     if(fileLine[j].length > 0){
 		      	if (i == 0)
 		      	{
-		      		strDiv += '<br> <input type="text" data-id="campo" disabled> <br>';
+		      		strDiv += '<br> <input type="text" > <br>';
 		      	}
 		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
+		      
 		      }
-		    }
 		    strDiv += '</tr>';
 		  }
 
@@ -50,8 +54,8 @@
 		  var CSVsaida = document.getElementById('CSVsaida');
 		  CSVsaida.innerHTML = strDiv;
 		}
-
-
+	}
+}
     </script>
     <script>
     	$(function(){
@@ -71,17 +75,16 @@
 
 ?>
 
-<input type="button" name="btnNovo" value="Nova Tabela">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<button type="button" class="btn-toggle" data-element="#minhaDiv">Nova Tabela</button>
 
 <input type="button" name="btnNovo" value="Atualizar Tabela">
 
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<div id="minhaDiv">
-<input type="file" id="inputCSV" onchange="pegaCSV(this)" >
+<div id="minhaDiv" hidden="true">
+<input type="file" id="inputCSV" onchange="pegaCSV(this)">
 </div>
-<button type="button" class="btn-toggle" data-element="#minhaDiv">Mostrar / Esconder</button>
+
 
 <div id="CSVsaida"></div>
 
