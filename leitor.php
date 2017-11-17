@@ -37,15 +37,18 @@
 
 	    	var fileLine = fileArr[i].split(';');
 
-		    for (var j = 0; j < fileLine.length; j++) {
-		     if(fileLine[j].length > 0){
-		      	if (i == 0)
-		      	{
-		      		strDiv += '<br> <input type="text" > <br>';
+		    for (var j = 0; j < fileLine.length; j++) 
+		    {
+		     	if(fileLine[j].length > 0)
+		     	{
+		      		if (i == 0)
+		      		{
+		      			strDiv += '<br> Digite o nome para o campo '+ j +': <input type="text" > <br>';
+		      		}
 		      	}
 		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
 		      
-		      }
+		    }
 		    strDiv += '</tr>';
 		  }
 
@@ -55,7 +58,7 @@
 		  CSVsaida.innerHTML = strDiv;
 		}
 	}
-}
+
     </script>
     <script>
     	$(function(){
@@ -83,6 +86,7 @@
 
 <div id="minhaDiv" hidden="true">
 <input type="file" id="inputCSV" onchange="pegaCSV(this)">
+<br>Digite o nome da tabela: <input type="text" name="tabelaNome">
 </div>
 
 
