@@ -1,3 +1,43 @@
+<?php
+include("config.php");
+
+if(isset($_POST['login'])){
+
+	session_start();
+	$session = session_id();
+	$tabela = $_POST['nome'];
+	$senha = $_POST['senha'];
+	$emal = $_POST['email'];
+
+	$sql = "SELECT * FROM usuario WHERE login = '$login'";
+	$executa = mysql_query($sql) or die (mysql_error());
+	$num = mysql_num_rows($executa);
+
+	$sql2 = "SELECT * FROM usuario WHERE email = '$email'";
+	$executa2 = mysql_query($sql2) or die(mysql_error());
+	$num2 = mysql_num_rows($executa2);
+
+	if($_POST['login'] == "" || $_POST['senha'] == "" || $_POST['senha2'] == "" || $_POST['email'] == ""){
+		$ac[] = "Por favor preencha todos os campos corretamente.";
+	}
+
+	if($num > 0){
+		$ac[] = "Esse login ja esta sendo usado por outro usuario.";
+	}
+
+	if($num2 > 0){
+		$ac[] = "Esse email,ja esta sendo usado por outro usuario";
+	}
+
+	if (!ereg("@.", $_POST['email'])){
+      $ac[] = "E-mail invalido.";
+   }
+
+   if ($_POST['senha'] != $_POST['senha2']){
+      $ac[] = "Verifique se as duas senha estao correta.";
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,9 +114,7 @@
 
 <body>
 
-<?php
-
-?>
+<form id="form1" name="form1" method="post" action="<?php $_SERVER['PHP_SELF']?>">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
@@ -86,12 +124,23 @@
 
 <div id="minhaDiv" hidden="true">
 <input type="file" id="inputCSV" onchange="pegaCSV(this)">
-<br>Digite o nome da tabela: <input type="text" name="tabelaNome">
+<br>
+<br>
+Digite o nome da tabela: <input type="text" name="txtName" id="Nome">
+<br>
+<br>
+
+<input type="submit" name="btnNovo" value="Cadastrar">
+
+</div>
+
+
+
 </div>
 
 
 <div id="CSVsaida"></div>
 
-
+</form>
 </body>
 </html>
