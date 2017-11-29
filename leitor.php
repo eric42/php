@@ -6,10 +6,17 @@ if(isset($_POST['login'])){
 	session_start();
 	$session = session_id();
 	$tabela = $_POST['nome'];
-	$senha = $_POST['senha'];
-	$emal = $_POST['email'];
+	$QtdCampos = 0;
 
-	$sql = "SELECT * FROM usuario WHERE login = '$login'";
+
+	$sql = "CREATE TABLE '$tabela' (";;
+	for(var  = 0; i < $QtdCampos; i++){
+		if($_POST[i] != "")
+		{
+			$sql += "+i+";
+		}
+	}
+	$sql += ")";
 	$executa = mysql_query($sql) or die (mysql_error());
 	$num = mysql_num_rows($executa);
 
@@ -17,7 +24,7 @@ if(isset($_POST['login'])){
 	$executa2 = mysql_query($sql2) or die(mysql_error());
 	$num2 = mysql_num_rows($executa2);
 
-	if($_POST['login'] == "" || $_POST['senha'] == "" || $_POST['senha2'] == "" || $_POST['email'] == ""){
+	if($_POST['login'] == "" || $_POST['senha'] == "" || $_POST['senha2'] == "" || $_POST['email'] == ""){  
 		$ac[] = "Por favor preencha todos os campos corretamente.";
 	}
 
@@ -48,7 +55,7 @@ if(isset($_POST['login'])){
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 
-    <script type='text/javascript'>//<![CDATA[
+    <script type='text/javascript'>
 		var leitorDeCSV = new FileReader();
 
 		window.onload = function init() {
@@ -83,7 +90,12 @@ if(isset($_POST['login'])){
 		     	{
 		      		if (i == 0)
 		      		{
-		      			strDiv += '<br> Digite o nome para o campo '+ j +': <input type="text" > <br>';
+		      			strDiv += '<br> Digite o nome para o campo '+ j +': <input type="text" id="'+j+'"> <br>';
+		      			strDiv += '<select name="cmbTipo">';
+		      			strDiv += '<option value="INT"> INT </option>';
+		      			strDiv += '<option value="VARCHAR"> VARCHAR </option>';
+		      			strDiv += '<option value="DATE"> DATE </option>';
+		      			strDiv += '</select>';
 		      		}
 		      	}
 		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
