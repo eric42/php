@@ -10,17 +10,20 @@ if(isset($_POST['login'])){
 
 
 	$sql = "CREATE TABLE '$tabela' (";;
-	for(var  = 0; i < $QtdCampos; i++){
-		if($_POST[i] != "")
+	for($i = 0; $i < $QtdCampos; $i++){
+		if($_POST[$i] != "")
 		{
-			$sql += "+i+";
+
+			$sql += "'$i'";
+			$valor = $_POST['cmbitens'+$i]; 
+			$sql += " '$valor', ";
 		}
 	}
-	$sql += ")";
+	$sql += ");";
 	$executa = mysql_query($sql) or die (mysql_error());
 	$num = mysql_num_rows($executa);
 
-	$sql2 = "SELECT * FROM usuario WHERE email = '$email'";
+	/*$sql2 = "SELECT * FROM usuario WHERE email = '$email'";
 	$executa2 = mysql_query($sql2) or die(mysql_error());
 	$num2 = mysql_num_rows($executa2);
 
@@ -42,7 +45,8 @@ if(isset($_POST['login'])){
 
    if ($_POST['senha'] != $_POST['senha2']){
       $ac[] = "Verifique se as duas senha estao correta.";
-	}
+	}*/
+}
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +95,7 @@ if(isset($_POST['login'])){
 		      		if (i == 0)
 		      		{
 		      			strDiv += '<br> Digite o nome para o campo '+ j +': <input type="text" id="'+j+'"> <br>';
-		      			strDiv += '<select name="cmbTipo">';
+		      			strDiv += '<select name="cmbTipo'+j+'">';
 		      			strDiv += '<option value="INT"> INT </option>';
 		      			strDiv += '<option value="VARCHAR"> VARCHAR </option>';
 		      			strDiv += '<option value="DATE"> DATE </option>';
@@ -145,11 +149,6 @@ Digite o nome da tabela: <input type="text" name="txtName" id="Nome">
 <input type="submit" name="btnNovo" value="Cadastrar">
 
 </div>
-
-
-
-</div>
-
 
 <div id="CSVsaida"></div>
 
