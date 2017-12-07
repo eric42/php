@@ -1,33 +1,35 @@
 <?php
-include("config.php");
+//include("config.php");
 
+
+echo "<script>Alert('Fudeu não sei o que fazer');</script>";
 if(isset($_POST['login'])){
 
 	session_start();
 	$session = session_id();
 	$tabela = $_POST['nome'];
-	$QtdCampos = 0;
+	$QtdCampos = $_POST['QTDCAMPOS'];
+	
+	if($QtdCampos != 0)
+	{
+		echo "<script>Alert('Passou aqui');</script>";
 
+		$sql = "CREATE TABLE '$tabela' (";
+		for($i = 0; $i < $QtdCampos; $i++){
+			if($_POST[$i] != "")
+			{
 
-	$sql = "CREATE TABLE '$tabela' (";;
-	for($i = 0; $i < $QtdCampos; $i++){
-		if($_POST[$i] != "")
-		{
-
-			$sql += "'$i'";
-			$valor = $_POST['cmbitens'+$i]; 
-			$sql += " '$valor', ";
+				$sql += "'$i'";
+				$valor = $_POST['cbmtipo'+$i]; 
+				$sql += " '$valor', ";
+			}
 		}
+		$sql += ");";
+		$executa = mysql_query($sql) or die (mysql_error());
+		echo $sql;
 	}
-	$sql += ");";
-	$executa = mysql_query($sql) or die (mysql_error());
-	$num = mysql_num_rows($executa);
-
-	/*$sql2 = "SELECT * FROM usuario WHERE email = '$email'";
-	$executa2 = mysql_query($sql2) or die(mysql_error());
-	$num2 = mysql_num_rows($executa2);
-
-	if($_POST['login'] == "" || $_POST['senha'] == "" || $_POST['senha2'] == "" || $_POST['email'] == ""){  
+	echo "<script>Alert('Foi reto');</script>";
+	/*for($i = 0; $i < $QtdCampos; $i++){  
 		$ac[] = "Por favor preencha todos os campos corretamente.";
 	}
 
@@ -75,6 +77,7 @@ if(isset($_POST['login'])){
 
 		  var fileArr = evt.target.result.split('\n');
 		  var strDiv = '<table border = 1>';
+		  <?php $QtdCampos = 0; ?>
 
 		  for (var i = 0; i < fileArr.length; i++) {
 
@@ -100,6 +103,8 @@ if(isset($_POST['login'])){
 		      			strDiv += '<option value="VARCHAR"> VARCHAR </option>';
 		      			strDiv += '<option value="DATE"> DATE </option>';
 		      			strDiv += '</select>';
+		      			strDiv += '<input type="text" id="QTDCAMPOS" value='+ j +' hidden/>';
+
 		      		}
 		      	}
 		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
@@ -107,6 +112,7 @@ if(isset($_POST['login'])){
 		    }
 		    strDiv += '</tr>';
 		  }
+
 
 		  strDiv += '</table>';
 
@@ -130,8 +136,6 @@ if(isset($_POST['login'])){
 
 <body>
 
-<form id="form1" name="form1" method="post" action="<?php $_SERVER['PHP_SELF']?>">
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <button type="button" class="btn-toggle" data-element="#minhaDiv">Nova Tabela</button>
@@ -139,6 +143,7 @@ if(isset($_POST['login'])){
 <input type="button" name="btnNovo" value="Atualizar Tabela">
 
 <div id="minhaDiv" hidden="true">
+<form id="form1" name="form1" method="post" action="<?php $_SERVER['PHP_SELF']?>">
 <input type="file" id="inputCSV" onchange="pegaCSV(this)">
 <br>
 <br>
@@ -146,7 +151,7 @@ Digite o nome da tabela: <input type="text" name="txtName" id="Nome">
 <br>
 <br>
 
-<input type="submit" name="btnNovo" value="Cadastrar">
+<input type="submit" name="Submit" value="Cadastrar">
 
 </div>
 
