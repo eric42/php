@@ -1,18 +1,13 @@
 <?php
-//include("config.php");
+echo "Fudeu não sei o que fazer";
 
 
-echo "<script>Alert('Fudeu não sei o que fazer');</script>";
-if(isset($_POST['login'])){
-
-	session_start();
-	$session = session_id();
 	$tabela = $_POST['nome'];
 	$QtdCampos = $_POST['QTDCAMPOS'];
 	
 	if($QtdCampos != 0)
 	{
-		echo "<script>Alert('Passou aqui');</script>";
+		echo "Passou aqui";
 
 		$sql = "CREATE TABLE '$tabela' (";
 		for($i = 0; $i < $QtdCampos; $i++){
@@ -48,7 +43,7 @@ if(isset($_POST['login'])){
    if ($_POST['senha'] != $_POST['senha2']){
       $ac[] = "Verifique se as duas senha estao correta.";
 	}*/
-}
+
 ?>
 
 <!DOCTYPE html>
