@@ -2,8 +2,8 @@
 echo "Fudeu não sei o que fazer";
 
 
-	$tabela = $_POST['nome'];
-	$QtdCampos = $_POST['QTDCAMPOS'];
+	$tabela = isset($_POST['Nome']) ? $_POST['Nome'] : '';
+	$QtdCampos = isset($_POST['QTDCAMPOS']) ? $_POST['QTDCAMPOS'] : '';
 	
 	if($QtdCampos != 0)
 	{
@@ -130,7 +130,8 @@ echo "Fudeu não sei o que fazer";
 </head>
 
 <body>
-
+<form id="form1" name="form1" method="post" action="<?php $_SERVER['PHP_SELF']?>">
+	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <button type="button" class="btn-toggle" data-element="#minhaDiv">Nova Tabela</button>
@@ -138,11 +139,11 @@ echo "Fudeu não sei o que fazer";
 <input type="button" name="btnNovo" value="Atualizar Tabela">
 
 <div id="minhaDiv" hidden="true">
-<form id="form1" name="form1" method="post" action="<?php $_SERVER['PHP_SELF']?>">
+
 <input type="file" id="inputCSV" onchange="pegaCSV(this)">
 <br>
 <br>
-Digite o nome da tabela: <input type="text" name="txtName" id="Nome">
+Digite o nome da tabela: <input type="text" name="Nome" id="Nome">
 <br>
 <br>
 
