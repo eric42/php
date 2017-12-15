@@ -18,8 +18,8 @@ if ($num == 0){
 elseif ($fetLogar['ativo'] == "N") {
 	echo "Usuario nao ativo, verifique seu email para ativa a conta.";
 	echo "<br><a href='javascript:window.history.go(-1)'>Clique aqui para voltar.</a>";
-}
-else{
+
+}else{
 	session_start();
 	$_SESSION['login'] = $login;
 	$_SESSION['senha'] = $senha;

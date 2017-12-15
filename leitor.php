@@ -1,22 +1,26 @@
 <?php
-echo "Fudeu não sei o que fazer";
 
+include("config.php");
 
+	
+if(isset($_POST['login'])){
+
+	session_start();
+	$session = session_id();
 	$tabela = isset($_POST['Nome']) ? $_POST['Nome'] : '';
 	$QtdCampos = isset($_POST['QTDCAMPOS']) ? $_POST['QTDCAMPOS'] : '';
-	
+
 	if($QtdCampos != 0)
 	{
-		echo "Passou aqui";
 
 		$sql = "CREATE TABLE '$tabela' (";
-		for($i = 0; $i < $QtdCampos; $i++){
+		for($i = 0; $i = $QtdCampos; $i++){
 			if($_POST[$i] != "")
 			{
 
-				$sql += "'$i'";
+				$sql += "`$i`";
 				$valor = $_POST['cbmtipo'+$i]; 
-				$sql += " '$valor', ";
+				$sql += " `$valor`, ";
 			}
 		}
 		$sql += ");";
@@ -43,7 +47,7 @@ echo "Fudeu não sei o que fazer";
    if ($_POST['senha'] != $_POST['senha2']){
       $ac[] = "Verifique se as duas senha estao correta.";
 	}*/
-
+}
 ?>
 
 <!DOCTYPE html>
@@ -92,16 +96,16 @@ echo "Fudeu não sei o que fazer";
 		     	{
 		      		if (i == 0)
 		      		{
-		      			strDiv += '<br> Digite o nome para o campo '+ j +': <input type="text" id="'+j+'"> <br>';
+		      			strDiv += '<br> Digite o nome para o campo '+ j +': <input type="text" name="'+j+'"> <br>';
 		      			strDiv += '<select name="cmbTipo'+j+'">';
 		      			strDiv += '<option value="INT"> INT </option>';
 		      			strDiv += '<option value="VARCHAR"> VARCHAR </option>';
 		      			strDiv += '<option value="DATE"> DATE </option>';
 		      			strDiv += '</select>';
-		      			strDiv += '<input type="text" id="QTDCAMPOS" value='+ j +' hidden/>';
 
 		      		}
 		      	}
+		      	strDiv += '<input type="text" name="QTDCAMPOS" value='+ j +' hidden/>';
 		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
 		      
 		    }

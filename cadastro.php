@@ -22,7 +22,7 @@ if(isset($_POST['login'])){
 	}
 
 	if($num > 0){
-		$ac[] = "Esse login ja esta sendo usado por putro usuario.";
+		$ac[] = "Esse login ja esta sendo usado por outro usuario.";
 	}
 
 	if($num2 > 0){
@@ -81,7 +81,7 @@ if(isset($_POST['login'])){
 	}
 	?>
 
-<form id="form1" name="form1" method="post" action="<?php $_SERVER['PHP_SELF']?>">
+<form id="form1" name="form1" method="post" action="<?php  ?>">
 	<table width="100%" border="0">
 		<tr>
 			<td colspan="2"><div align="center"><strong>Cadastro</strong></div></td>
