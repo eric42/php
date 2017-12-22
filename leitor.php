@@ -3,31 +3,43 @@
 include("config.php");
 
 	
-if(isset($_POST['login'])){
-
-	session_start();
-	$session = session_id();
 	$tabela = isset($_POST['Nome']) ? $_POST['Nome'] : '';
 	$QtdCampos = isset($_POST['QTDCAMPOS']) ? $_POST['QTDCAMPOS'] : '';
+	$string = "";
 
 	if($QtdCampos != 0)
 	{
-
-		$sql = "CREATE TABLE '$tabela' (";
-		for($i = 0; $i = $QtdCampos; $i++){
-			if($_POST[$i] != "")
-			{
-
-				$sql += "`$i`";
-				$valor = $_POST['cbmtipo'+$i]; 
-				$sql += " `$valor`, ";
-			}
-		}
-		$sql += ");";
-		$executa = mysql_query($sql) or die (mysql_error());
+		$string = "CREATE TABLE '$tabela' (";
 		echo $sql;
+		for($i = 0; $i <= $QtdCampos; $i++){
+		
+			if($_POST[$i] != " " || $_POST[$i] != "" || empty($_POST[$i]))
+			{
+				
+				$field = $_POST[$i];
+				 if ($field != 0 || $field != " " || empty($field)){
+					$string .= "".$field." ";
+
+					$valor = $_POST['cbmtipo'.$i]; 
+					if($valor != " " || empty($valor) || $valor != 0)
+					{
+						$string .= " ".$valor.", ";
+					}
+				}
+				
+				
+			}
+			/*
+
+				
+				
+			*/
+		}
+		$string .= ");";
+
+		//$executa = mysql_query($sql) or die (mysql_error());
+		echo $string;
 	}
-	echo "<script>Alert('Foi reto');</script>";
 	/*for($i = 0; $i < $QtdCampos; $i++){  
 		$ac[] = "Por favor preencha todos os campos corretamente.";
 	}
@@ -47,7 +59,7 @@ if(isset($_POST['login'])){
    if ($_POST['senha'] != $_POST['senha2']){
       $ac[] = "Verifique se as duas senha estao correta.";
 	}*/
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -96,16 +108,19 @@ if(isset($_POST['login'])){
 		     	{
 		      		if (i == 0)
 		      		{
+		      			var m = j;
 		      			strDiv += '<br> Digite o nome para o campo '+ j +': <input type="text" name="'+j+'"> <br>';
-		      			strDiv += '<select name="cmbTipo'+j+'">';
+		      			strDiv += '<select name="'+m+'">';
+		      			strDiv += '<option></option>';
 		      			strDiv += '<option value="INT"> INT </option>';
 		      			strDiv += '<option value="VARCHAR"> VARCHAR </option>';
 		      			strDiv += '<option value="DATE"> DATE </option>';
 		      			strDiv += '</select>';
+		      			strDiv += '<input type="text" name="QTDCAMPOS" value='+ j +' hidden/>';
 
 		      		}
 		      	}
-		      	strDiv += '<input type="text" name="QTDCAMPOS" value='+ j +' hidden/>';
+		      	
 		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
 		      
 		    }
