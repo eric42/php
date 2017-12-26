@@ -15,7 +15,7 @@ include("config.php");
 		
 			if(!empty($_POST[$i]))
 			{
-				if (!empty($string) || $string != ""){
+				if (!empty($field)){
 					$string .= ", ";
 				}
 				
