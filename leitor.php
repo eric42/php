@@ -13,17 +13,20 @@ include("config.php");
 		echo $sql;
 		for($i = 0; $i <= $QtdCampos; $i++){
 		
-			if($_POST[$i] != " " || $_POST[$i] != "" || empty($_POST[$i]))
+			if(!empty($_POST[$i]))
 			{
+				if (!empty($string) || $string != ""){
+					$string .= ", ";
+				}
 				
 				$field = $_POST[$i];
-				 if ($field != 0 || $field != " " || empty($field)){
-					$string .= "".$field." ";
+				 if ($field != 0 || $field != " " || !empty($field)){
+					
 
-					$valor = $_POST['cbmtipo'.$i]; 
-					if($valor != " " || empty($valor) || $valor != 0)
+					$valor = $_POST["m".$i]; 
+					if($valor != " " || !empty($valor) || $valor != 0)
 					{
-						$string .= " ".$valor.", ";
+						$string .= "".$field." ".$valor;
 					}
 				}
 				
@@ -110,7 +113,7 @@ include("config.php");
 		      		{
 		      			var m = j;
 		      			strDiv += '<br> Digite o nome para o campo '+ j +': <input type="text" name="'+j+'"> <br>';
-		      			strDiv += '<select name="'+m+'">';
+		      			strDiv += '<select name="m'+m+'">';
 		      			strDiv += '<option></option>';
 		      			strDiv += '<option value="INT"> INT </option>';
 		      			strDiv += '<option value="VARCHAR"> VARCHAR </option>';
