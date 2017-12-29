@@ -9,7 +9,7 @@ include("config.php");
 
 	if($QtdCampos != 0)
 	{
-		$string = "CREATE TABLE '$tabela' (";
+		$string = "CREATE TABLE  IF NOT EXISTS `$tabela` (`id` int(10) NOT NULL AUTO_INCREMENT, ";
 
 		for($i = 0; $i <= $QtdCampos; $i++){
 		
@@ -26,19 +26,14 @@ include("config.php");
 					$valor = $_POST["m".$i]; 
 					if($valor != " " || !empty($valor) || $valor != 0)
 					{
-						$string .= "".$field." ".$valor;
+						$string .= "`".$field."` ".$valor;
 					}
-				}
-
-				$primario = $_POST["meucheckbox".$i];
-				if($primario != 0){
-					$string .= " PRIMARY KEY (".$field.")";
 				}
 					
 			}
 		}
-		$string .= ");";
 
+		$string .= ", KEY (id));";
 
 		$executa = mysql_query($string) or die (mysql_error());
 
@@ -119,7 +114,6 @@ include("config.php");
 		      			strDiv += '<option value="VARCHAR(100)"> VARCHAR </option>';
 		      			strDiv += '<option value="DATE"> DATE </option>';
 		      			strDiv += '</select>';
-		      			strDiv += '<input type="checkbox" name="meucheckbox'+m+'" value="21"> chave primaria?';
 		      			strDiv += '<input type="text" name="QTDCAMPOS" value='+ j +' hidden/>';
 		      			strDiv += '<br>';
 
