@@ -7,36 +7,57 @@ include("config.php");
 	$QtdCampos = isset($_POST['QTDCAMPOS']) ? $_POST['QTDCAMPOS'] : '';
 	$string = "";
 
+
+
 	if($QtdCampos != 0)
 	{
-		$string = "CREATE TABLE  IF NOT EXISTS `$tabela` (`id` int(10) NOT NULL AUTO_INCREMENT, ";
-
-		for($i = 0; $i <= $QtdCampos; $i++){
 		
-			if(!empty($_POST[$i]))
-			{
-				if (!empty($field)){
-					$string .= ", ";
-				}
-				
-				$field = $_POST[$i];
-				 if ($field != 0 || $field != " " || !empty($field)){
-					
+		if($tabela == ""){
+			$ac = "Preencha o nome da tabela";
+		}
 
-					$valor = $_POST["m".$i]; 
-					if($valor != " " || !empty($valor) || $valor != 0)
-					{
-						$string .= "`".$field."` ".$valor;
-					}
-				}
-					
+		for($x = 0; $x <= $QtdCampos; $x++){
+			if($_POST[$x] = ""){
+				$r += 1;
 			}
 		}
 
-		$string .= ", KEY (id));";
+		if($r == $QtdCampos){ 
+			$ac = "Preencha o nome de um dos campos da tabela";
+		}
 
-		$executa = mysql_query($string) or die (mysql_error());
+		if(!isset($ac)){
 
+			$string = "CREATE TABLE  IF NOT EXISTS `$tabela` (`id` int(10) NOT NULL AUTO_INCREMENT, ";
+
+			for($i = 0; $i <= $QtdCampos; $i++){
+		
+				if(!empty($_POST[$i]))
+				{
+					if (!empty($field)){
+						$string .= ", ";
+					}
+				
+					$field = $_POST[$i];
+				 	if ($field != 0 || $field != " " || !empty($field)){
+					
+
+						$valor = $_POST["m".$i]; 
+						if($valor != " " || !empty($valor) || $valor != 0)
+						{
+							$string .= "`".$field."` ".$valor;
+						}
+					}
+					
+				}
+			}
+
+			$string .= ", KEY (id));";
+
+			$executa = mysql_query($string) or die (mysql_error());
+			$ac =  "Operacao realizada com sucesso";
+
+		}
 	}
 	/*for($i = 0; $i < $QtdCampos; $i++){  
 		$ac[] = "Por favor preencha todos os campos corretamente.";
@@ -148,6 +169,12 @@ include("config.php");
 </head>
 
 <body>
+	<?php
+		if (isset($ac)) {
+				echo "<li>".$ac;
+		}
+	?>
+
 <form id="form1" name="form1" method="post" action="<?php $_SERVER['PHP_SELF']?>">
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
