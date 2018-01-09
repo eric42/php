@@ -17,14 +17,16 @@ include("config.php");
 		}
 
 		for($x = 0; $x <= $QtdCampos; $x++){
-			if($_POST[$x] = ""){
+			if($_POST["m".$x] == ""){
 				$r += 1;
+			}
+
+			if(($r - 1) == $QtdCampos){ 
+
+				$ac = "Preencha o nome de um dos campos da tabela";
 			}
 		}
 
-		if($r == $QtdCampos){ 
-			$ac = "Preencha o nome de um dos campos da tabela";
-		}
 
 		if(!isset($ac)){
 
@@ -54,30 +56,50 @@ include("config.php");
 
 			$string .= ", KEY (id));";
 
-			$executa = mysql_query($string) or die (mysql_error());
+			//$executa = mysql_query($string) or die (mysql_error());
+
+			if($_POST["dados"] == 1)
+			{
+				for($c = 0; $c <= count($_POST["tabela"]); $c++)
+				{
+
+					$sql = "INSERT INTO `$tabela` (";
+
+					for($v = 0; $v <= $QtdCampos; $v++)
+					{
+						if (!empty($_POST[$v]))
+						{
+							$sql .= "`". $_POST[$v]."`";
+
+							if($v != $QtdCampos)
+							{
+								$sql .= ", ";
+							}
+						}
+
+						$sql .= ") VALUES(" ;
+
+						if($field[$v] != "" || empty($field[$v]))
+						{
+							$sql .= $_POST[$v];
+
+
+							if($v != $QtdCampos)
+							{
+								$sql .= ", ";
+							}
+						}
+						$sql .= ");";
+					}
+
+					echo $sql;
+				}
+			}
+
 			$ac =  "Operacao realizada com sucesso";
 
 		}
 	}
-	/*for($i = 0; $i < $QtdCampos; $i++){  
-		$ac[] = "Por favor preencha todos os campos corretamente.";
-	}
-
-	if($num > 0){
-		$ac[] = "Esse login ja esta sendo usado por outro usuario.";
-	}
-
-	if($num2 > 0){
-		$ac[] = "Esse email,ja esta sendo usado por outro usuario";
-	}
-
-	if (!ereg("@.", $_POST['email'])){
-      $ac[] = "E-mail invalido.";
-   }
-
-   if ($_POST['senha'] != $_POST['senha2']){
-      $ac[] = "Verifique se as duas senha estao correta.";
-	}*/
 
 ?>
 
@@ -106,7 +128,7 @@ include("config.php");
 		function leCSV(evt) {
 
 		  var fileArr = evt.target.result.split('\n');
-		  var strDiv = '<table border = 1>';
+		  var strDiv = '<table border = "1" name="tabela">';
 		  <?php $QtdCampos = 0; ?>
 
 		  for (var i = 0; i < fileArr.length; i++) {
@@ -190,6 +212,7 @@ include("config.php");
 <br>
 Digite o nome da tabela: <input type="text" name="Nome" id="Nome">
 <br>
+<input type="checkbox" name="dados" checked="true" value="1">deseja importar os dados juntos?
 <br>
 
 <input type="submit" name="Submit" value="Cadastrar">
