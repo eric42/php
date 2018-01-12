@@ -60,10 +60,22 @@ include("config.php");
 
 			if($_POST["dados"] == 1)
 			{
-				for($c = 0; $c <= count($_POST["tabela"]); $c++)
+				$arquivo = $HTTP_POST_FILES["pegaDados"];
+				$file = fopen($arquivo, "r");
+				$result = array();
+
+				while (!eof($file)) {
+					$sql = "INSERT INTO `$tabela` (";
+
+					for ($i = 0; $i <= $QtdCampos; $i++){
+						
+					}
+				}
+
+				/*for($c = 0; $c <= count($_POST["tabela"]); $c++)
 				{
 
-					$sql = "INSERT INTO `$tabela` (";
+					
 
 					for($v = 0; $v <= $QtdCampos; $v++)
 					{
@@ -90,7 +102,7 @@ include("config.php");
 							}
 						}
 						$sql .= ");";
-					}
+					}*/
 
 					echo $sql;
 				}
@@ -207,7 +219,7 @@ include("config.php");
 
 <div id="minhaDiv" hidden="true">
 
-<input type="file" id="inputCSV" onchange="pegaCSV(this)">
+<input type="file" id="inputCSV" name="pegaDados" onchange="pegaCSV(this)">
 <br>
 <br>
 Digite o nome da tabela: <input type="text" name="Nome" id="Nome">
