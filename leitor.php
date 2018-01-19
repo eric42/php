@@ -32,6 +32,7 @@ include("config.php");
 
 			$string = "CREATE TABLE  IF NOT EXISTS `$tabela` (`id` int(10) NOT NULL AUTO_INCREMENT, ";
 
+
 			for($i = 0; $i <= $QtdCampos; $i++){
 		
 				if(!empty($_POST[$i]))
@@ -48,6 +49,7 @@ include("config.php");
 						if($valor != " " || !empty($valor) || $valor != 0)
 						{
 							$string .= "`".$field."` ".$valor;
+							
 						}
 					}
 					
@@ -57,61 +59,67 @@ include("config.php");
 			$string .= ", KEY (id));";
 
 			//$executa = mysql_query($string) or die (mysql_error());
-
-			if($_POST["dados"] == 1)
+			if ($_POST["dados"] == 1)
 			{
-				$arquivo = $HTTP_POST_FILES["pegaDados"];
-				$file = fopen($arquivo, "r");
-				$result = array();
+				
+				//Define o lugar que será salvo o arquivo com um nome aleatório
+				$arquivo = 'AMCC/' . uniqid(rand(), true) . '.csv';
 
-				while (!eof($file)) {
-					$sql = "INSERT INTO `$tabela` (";
-
-					for ($i = 0; $i <= $QtdCampos; $i++){
-						
-					}
+				if (empty($_FILES['inputCSV'])) {
+    				echo 'A requisição não veio por POST';
+    				exit;
+				} elseif ($_FILES['inputCSV']['error'] !== UPLOAD_ERR_OK) {
+    				echo 'Erro ao fazer o upload', $_FILES['file']['error'];
+    				exit;
+				} elseif (!move_uploaded_file($_FILES['inputCSV']['tmp_name'], $arquivo)) {
+    				echo 'Erro ao mover para a pasta';
+     				exit;
 				}
 
-				/*for($c = 0; $c <= count($_POST["tabela"]); $c++)
-				{
+				$handle = fopen ($arquivo, 'rb');
 
-					
-
-					for($v = 0; $v <= $QtdCampos; $v++)
-					{
-						if (!empty($_POST[$v]))
-						{
-							$sql .= "`". $_POST[$v]."`";
-
-							if($v != $QtdCampos)
-							{
-								$sql .= ", ";
-							}
-						}
-
-						$sql .= ") VALUES(" ;
-
-						if($field[$v] != "" || empty($field[$v]))
-						{
-							$sql .= $_POST[$v];
-
-
-							if($v != $QtdCampos)
-							{
-								$sql .= ", ";
-							}
-						}
-						$sql .= ");";
-					}*/
-
-					echo $sql;
+				//Verifica se o arquivo pode ser lido
+				if (!$handle) {
+    			echo 'Falha ao ler o arquivo';
+    			exit;
 				}
+
+				// Lê o conteúdo do arquivo
+				while(!feof($handle)){
+    				// Pega os dados da linha
+    				$linha = fgets($handle, 1024);
+
+    				// Divide as Informações das celular para poder salvar
+    				$dados = explode(';', $linha);
+
+
+
+     				echo $dados[0]."<br>"; 
+
+
+    				// Verifica se o Dados Não é o cabeçalho ou não esta em branco
+    				if($dados[0] != 'Date' && !empty($linha)){
+
+
+       				//mysql_query('INSERT INTO emails (nome, email) VALUES ("'.$dados[0].'", "'.$dados[1].'")');
+    			}
 			}
 
-			$ac =  "Operacao realizada com sucesso";
+			// Fecha arquivo aberto
+			fclose($handle);
 
+			//Deleta o arquivo após usá-lo
+			unlink($arquivo);
+		}
+
+
+		echo $sql;
 		}
 	}
+
+
+
+			$ac =  "Operacao realizada com sucesso";
 
 ?>
 
@@ -171,10 +179,8 @@ include("config.php");
 		      			strDiv += '</select>';
 		      			strDiv += '<input type="text" name="QTDCAMPOS" value='+ j +' hidden/>';
 		      			strDiv += '<br>';
-
 		      		}
 		      	}
-		      	
 		      	strDiv += '<td>' + fileLine[j].trim() + '</td>';
 		      
 		    }
@@ -219,7 +225,7 @@ include("config.php");
 
 <div id="minhaDiv" hidden="true">
 
-<input type="file" id="inputCSV" name="pegaDados" onchange="pegaCSV(this)">
+<input type="file" id="inputCSV" name="pegaDados" onchange="pegaCSV(this) ">
 <br>
 <br>
 Digite o nome da tabela: <input type="text" name="Nome" id="Nome">
