@@ -63,19 +63,19 @@ include("config.php");
 			{
 				
 				//Define o lugar que será salvo o arquivo com um nome aleatório
-				$arquivo = 'AMCC/' . uniqid(rand(), true) . '.csv';
+				$arquivo = 'C:/wamp/www/Am/' . uniqid(rand(), true) . '.csv';
 
 				if (empty($_FILES['inputCSV'])) {
     				echo 'A requisição não veio por POST';
     				exit;
 				} elseif ($_FILES['inputCSV']['error'] !== UPLOAD_ERR_OK) {
-    				echo 'Erro ao fazer o upload', $_FILES['file']['error'];
+    				echo 'Erro ao fazer o upload', $_FILES['inputCSV']['error'];
     				exit;
 				} elseif (!move_uploaded_file($_FILES['inputCSV']['tmp_name'], $arquivo)) {
     				echo 'Erro ao mover para a pasta';
      				exit;
 				}
-
+				echo "funcionou";
 				$handle = fopen ($arquivo, 'rb');
 
 				//Verifica se o arquivo pode ser lido
@@ -98,7 +98,7 @@ include("config.php");
 
 
     				// Verifica se o Dados Não é o cabeçalho ou não esta em branco
-    				if($dados[0] != 'Date' && !empty($linha)){
+    				if(!empty($dados[0]) && !empty($linha)){
 
 
        				//mysql_query('INSERT INTO emails (nome, email) VALUES ("'.$dados[0].'", "'.$dados[1].'")');
