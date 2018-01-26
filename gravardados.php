@@ -79,44 +79,36 @@ include("config.php");
 
     <script type='text/javascript'>
 
-    	var leitorDeCSV = new FileReader();
+ 		var leitorDeCSV = new FileReader();
 
 		window.onload = function init() {
-		  leitorDeCSV.onload = InserirRegistros;
+			  leitorDeCSV.onload = leCSV;
 		}
 
 		function pegaCSV(inputFile) {
-		  var file = inputFile.files[0];
-		  leitorDeCSV.readAsText(file);
+		  	var file = inputFile.files[0];
+		  	leitorDeCSV.readAsText(file);
 		}
 
-    	function InserirRegistros(val)
-		{
-			$arquivo = 'C:/wamp/www/Am/' . uniqid(rand(), true) . '.csv';
+		function leCSV(evt) {
 
-			if (empty($_FILES['inputCSV'])) {
-				echo 'A requisição não veio por POST';
-    			exit;
-			} elseif ($_FILES['inputCSV']['error'] !== UPLOAD_ERR_OK) {
-    			echo 'Erro ao fazer o upload', $_FILES['inputCSV']['error'];
-    			exit;
-			} elseif (!move_uploaded_file($_FILES['inputCSV']['tmp_name'], $arquivo)) {
-    			echo 'Erro ao mover para a pasta';
-     			exit;
-			}
+		  var fileArr = evt.target.result.split('\n');
 
-			$handle = fopen ($arquivo, 'rb');
+		  for (var i = 0; i < fileArr.length; i++) {
 
-			if (!$handle) {
-    			echo 'Falha ao ler o arquivo';
-    			exit;
-			}
+		    var fileLine = fileArr[i].split(',');
+		    for (var j = 0; j < fileLine.length; j++) {
+		      strDiv += '<td>' + fileLine[j].trim() + '</td>';
+		    }
+		    strDiv += '</tr>';
+		  }
 
-			fclose($handle);
+		  strDiv += '</table>';
 
-			unlink($arquivo);
-
-		}
+		  var CSVsaida = document.getElementById('CSVsaida');
+		  CSVsaida.innerHTML = strDiv;
+		}   	
+		
 
     </script>
      <script>
