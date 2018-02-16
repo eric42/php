@@ -81,7 +81,7 @@ if(isset($_POST['login'])){
 	}
 	?>
 
-<form id="form1" name="form1" method="post" action="<?php  ?>">
+<form id="form1" name="form1" method="post" action="<?php   $_SERVER['PHP_SELF']?>">
 	<table width="100%" border="0">
 		<tr>
 			<td colspan="2"><div align="center"><strong>Cadastro</strong></div></td>
